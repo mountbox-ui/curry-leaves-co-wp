@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480" preserveAspectRatio="xMidYMid meet">
+  <defs>
+    <linearGradient id="bowl" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0%" stop-color="#c75b1a"/>
+      <stop offset="100%" stop-color="#8a3411"/>
+    </linearGradient>
+    <linearGradient id="curry" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0%" stop-color="#f5b24d"/>
+      <stop offset="100%" stop-color="#d67f1b"/>
+    </linearGradient>
+    <linearGradient id="plate" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0%" stop-color="#f2f1ee"/>
+      <stop offset="100%" stop-color="#d4d2cb"/>
+    </linearGradient>
+  </defs>
+  <rect width="640" height="480" fill="#2a1d14"/>
+  <ellipse cx="320" cy="400" rx="270" ry="40" fill="#3b2a1e" opacity="0.75"/>
+  <ellipse cx="320" cy="280" rx="260" ry="190" fill="url(#plate)"/>
+  <ellipse cx="320" cy="300" rx="200" ry="135" fill="url(#curry)"/>
+  <path d="M180 300 C220 230 260 210 320 210 C380 210 420 230 460 300" fill="#f7d07c" opacity="0.55"/>
+  <circle cx="260" cy="255" r="18" fill="#fff0b2"/>
+  <circle cx="380" cy="250" r="20" fill="#fff0b2"/>
+  <circle cx="330" cy="280" r="12" fill="#fff0b2"/>
+  <path d="M300 195 C310 170 360 170 370 195" stroke="#7c4d1c" stroke-width="18" fill="none" stroke-linecap="round"/>
+  <path d="M280 220 C330 200 350 220 400 205" stroke="#7c4d1c" stroke-width="14" fill="none" stroke-linecap="round" opacity="0.7"/>
+  <circle cx="180" cy="270" r="24" fill="#c75b1a"/>
+  <circle cx="460" cy="270" r="24" fill="#c75b1a"/>
+  <path d="M140 120 C170 90 210 90 240 120" fill="none" stroke="#f7d07c" stroke-width="18" stroke-linecap="round" opacity="0.8"/>
+</svg>

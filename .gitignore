@@ -1,0 +1,36 @@
+# Node dependencies
+node_modules/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor folders
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+*.code-workspace
+
+# Environment files
+.env
+.env.*
+
+# WordPress uploads and caches
+wp-content/uploads/
+wp-content/upgrade/
+wp-content/cache/
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*~

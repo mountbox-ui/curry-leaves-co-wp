@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="bg" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0%" stop-color="#fff7eb"/>
+      <stop offset="100%" stop-color="#ffe8ca"/>
+    </linearGradient>
+    <linearGradient id="leafGrad" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#8aa564"/>
+      <stop offset="100%" stop-color="#5f773f"/>
+    </linearGradient>
+    <linearGradient id="dosaGrad" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#f3c27a"/>
+      <stop offset="100%" stop-color="#d98e30"/>
+    </linearGradient>
+  </defs>
+  <rect width="1920" height="1080" fill="url(#bg)" />
+  <circle cx="1620" cy="180" r="180" fill="#ffebc7" />
+  <circle cx="1450" cy="220" r="90" fill="#f7d2a1" opacity="0.75" />
+  <g opacity="0.95">
+    <path d="M280 860 C150 820 170 560 420 500 Q520 620 620 560 Q770 475 920 560 Q1030 650 1140 560 Q1300 420 1450 510 Q1530 560 1600 650 Q1640 720 1580 760 Q1500 820 1360 760 Q1230 700 1080 760 Q940 820 800 760 Q680 710 620 790 Q560 860 420 900 Q340 920 280 860 Z" fill="url(#leafGrad)" transform="translate(-80 -80) rotate(-8 960 540)"/>
+    <path d="M420 840 C300 780 360 620 520 580 Q640 620 760 580 Q880 540 980 590 Q1080 640 1180 590 Q1280 540 1360 620 Q1420 680 1380 740 Q1340 800 1240 760 Q1120 720 1000 760 Q900 800 780 760 Q670 720 560 760 Q470 790 420 840 Z" fill="url(#leafGrad)" transform="matrix(1 0 0 1 0 -80)" opacity="0.95"/>
+  </g>
+  <ellipse cx="980" cy="710" rx="330" ry="180" fill="#fce5b9" />
+  <ellipse cx="980" cy="710" rx="300" ry="150" fill="url(#dosaGrad)" />
+  <circle cx="930" cy="720" r="48" fill="#8c5523" />
+  <circle cx="1030" cy="725" r="24" fill="#fff4d8" />
+  <circle cx="1080" cy="760" r="14" fill="#f7d2a1" />
+  <path d="M510 860 C520 780 640 760 700 740 C760 720 800 760 860 760 C920 760 980 720 1040 710 C1100 700 1170 730 1220 790 C1280 860 1210 930 1140 940 C1070 950 930 920 860 900 C790 880 710 850 640 860 C570 870 520 860 510 860 Z" fill="#ffffff" opacity="0.85"/>
+  <path d="M380 220 C400 190 450 180 520 200 C590 220 630 260 660 280 C690 300 730 310 760 320 C790 330 820 340 840 350 C860 360 860 390 840 410 C820 430 780 430 740 420 C700 410 660 390 620 380 C580 370 520 360 480 370 C440 380 410 410 390 430 C370 450 360 470 360 490 C360 510 370 540 380 560 C390 580 420 590 450 590 C480 590 520 580 550 570 C580 560 600 540 620 520" fill="#d98e30" opacity="0.22"/>
+  <g fill="#7f8f4f" opacity="0.75">
+    <ellipse cx="210" cy="220" rx="42" ry="18" />
+    <ellipse cx="238" cy="160" rx="18" ry="8" />
+    <ellipse cx="180" cy="180" rx="24" ry="10" />
+  </g>
+  <path d="M306 142 L342 198 L422 188 L354 218 L382 286 L326 248 L250 282 L286 212 L220 176 L296 170 Z" fill="#d07b1f" opacity="0.65" />
+</svg>
