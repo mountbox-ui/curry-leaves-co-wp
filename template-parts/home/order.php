@@ -13,6 +13,7 @@
 				<h3><?php echo wp_kses_post( __( 'Reserve Your <em>Luxury Takeaway</em>', 'curry-leaves-co' ) ); ?></h3>
 				<p><?php esc_html_e( 'No dining. No delivery. Pre-order your dishes and collect at your chosen time — prepared fresh with premium presentation.', 'curry-leaves-co' ); ?></p>
 				<ul class="reservation-details">
+				<a href="<?php echo esc_url( clc_phone_href() ); ?>">
 					<li class="reservation-detail-item">
 						<span class="reservation-detail-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
 						<div class="reservation-detail-text">
@@ -20,6 +21,7 @@
 							<p><a href="<?php echo esc_url( clc_phone_href() ); ?>"><?php echo esc_html( clc_phone() ); ?></a></p>
 						</div>
 					</li>
+					</a>
 					<li class="reservation-detail-item">
 						<span class="reservation-detail-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>
 						<div class="reservation-detail-text">
@@ -30,7 +32,7 @@
 				</ul>
 			</div>
 			<div class="reservation-form-wrapper glass-card reveal-right">
-				<form class="reservation-form" id="pickup-order-form" action="#" method="post" onsubmit="return false;">
+				<!-- <form class="reservation-form" id="pickup-order-form" action="#" method="post" onsubmit="return false;">
 					<div class="form-group">
 						<label for="order-name"><?php esc_html_e( 'Full Name', 'curry-leaves-co' ); ?></label>
 						<input type="text" id="order-name" name="name" required placeholder="<?php esc_attr_e( 'Your name', 'curry-leaves-co' ); ?>">
@@ -56,7 +58,12 @@
 						<textarea id="order-notes" name="notes" rows="3" placeholder="<?php esc_attr_e( 'Which dishes would you like?', 'curry-leaves-co' ); ?>"></textarea>
 					</div>
 					<button type="submit" class="btn-luxury btn-gold form-submit-btn"><?php esc_html_e( 'Submit Pickup Order', 'curry-leaves-co' ); ?></button>
-				</form>
+				</form> -->
+
+				<div class="contact-map reveal-right">
+				<iframe title="<?php esc_attr_e( 'Map', 'curry-leaves-co' ); ?>" src="https://maps.google.com/maps?q=Auckland%20New%20Zealand&amp;z=12&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+			</div> 
+				
 			</div>
 		</div>
 	</div>

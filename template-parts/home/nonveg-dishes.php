@@ -53,8 +53,17 @@ if ( ! $nonveg_term ) {
 				if ( $q->have_posts() ) :
 					while ( $q->have_posts() ) : $q->the_post();
 						$img = get_the_post_thumbnail_url( get_the_ID(), 'large' );
-						$img = $img ? $img : clc_default_food_images()[0];
+						$img = $img ? $img : get_template_directory_uri() . '/assets/images/fallback_img.png';
 						$price = get_post_meta( get_the_ID(), '_menu_item_price', true ) ?: '';
+						$discount = get_post_meta( get_the_ID(), '_menu_item_discount_percentage', true );
+						$offer_amount = get_post_meta( get_the_ID(), '_menu_item_offer_amount', true );
+						$has_discount = false;
+						$final_price = $price;
+						if ( $price && $discount && $offer_amount !== '' ) {
+							$has_discount = true;
+							$numeric_price = floatval(preg_replace('/[^0-9\.]/', '', $price));
+							$final_price = number_format_i18n(max(0, $numeric_price - floatval($offer_amount)), 2);
+						}
 						$desc = has_excerpt() ? get_the_excerpt() : wp_trim_words( get_the_content(), 18 );
 						?>
 						<article class="dish-card glass-card reveal nonveg-card">
@@ -67,7 +76,12 @@ if ( ! $nonveg_term ) {
 								<p class="dish-card-desc"><?php echo esc_html( $desc ); ?></p>
 								<div class="dish-card-footer">
 									<?php if ( $price ) : ?>
-										<span class="dish-card-price">$<?php echo esc_html( $price ); ?></span>
+										<div class="carousel-card-price-wrap" style="margin-top: 0; display: flex; flex-direction: column; align-items: flex-start;">
+											<?php if ( $has_discount ) : ?>
+												<span class="carousel-card-price-original" style="font-size: 0.75rem; text-decoration: line-through; color: #9ca3af; line-height: 1;">$<?php echo esc_html( $price ); ?></span>
+											<?php endif; ?>
+											<span class="carousel-card-price" style="margin-top: 0; line-height: 1;">$<?php echo esc_html( $final_price ); ?></span>
+										</div>
 									<?php endif; ?>
 									<a href="#order" class="dish-card-btn"><?php esc_html_e( 'Order', 'curry-leaves-co' ); ?></a>
 								</div>

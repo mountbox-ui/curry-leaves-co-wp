@@ -101,7 +101,7 @@ get_header();
         $offer_amount = get_post_meta( get_the_ID(), '_menu_item_offer_amount', true );
         $rating = get_post_meta( get_the_ID(), '_menu_item_rating', true ) ?: '0.0';
         $ingredients = get_post_meta( get_the_ID(), '_menu_item_ingredients', true );
-        $img_url = get_the_post_thumbnail_url( get_the_ID(), 'large' ) ?: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80';
+        $img_url = get_the_post_thumbnail_url( get_the_ID(), 'large' ) ?: get_template_directory_uri() . '/assets/images/fallback_img.png';
         
         $desc_clean = wp_strip_all_tags( get_the_content() );
         ?>

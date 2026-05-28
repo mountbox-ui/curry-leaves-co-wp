@@ -153,6 +153,8 @@
 
   function initCarousels() {
     setupCarousel('top-dishes-carousel', '.carousel-prev', '.carousel-next', true);
+    setupCarousel('veg-dishes-carousel', '.carousel-prev', '.carousel-next', false);
+    setupCarousel('favorite-dishes-carousel', '.carousel-prev', '.carousel-next', false);
     setupTestimonialSlider();
   }
 
@@ -166,18 +168,40 @@
     if (cards.length < 2) return;
 
     let index = 0;
+    let intervalId;
     const cardWidth = () => cards[0].offsetWidth + 24;
+
+    const stopAutoScroll = () => {
+      if (intervalId) {
+        clearInterval(intervalId);
+        intervalId = null;
+      }
+    };
 
     const scrollTo = (i) => {
       index = (i + cards.length) % cards.length;
       track.scrollTo({ left: index * cardWidth(), behavior: prefersReduced ? 'auto' : 'smooth' });
     };
 
-    prev?.addEventListener('click', () => scrollTo(index - 1));
-    next?.addEventListener('click', () => scrollTo(index + 1));
+    prev?.addEventListener('click', () => {
+      stopAutoScroll();
+      scrollTo(index - 1);
+    });
+
+    next?.addEventListener('click', () => {
+      stopAutoScroll();
+      scrollTo(index + 1);
+    });
+
+    cards.forEach((card) => {
+      card.addEventListener('click', stopAutoScroll);
+    });
+
+    track.addEventListener('pointerdown', stopAutoScroll);
+    track.scrollTo({ left: 0, behavior: 'auto' });
 
     if (auto && !prefersReduced) {
-      setInterval(() => scrollTo(index + 1), 5000);
+      intervalId = setInterval(() => scrollTo(index + 1), 5000);
     }
   }
 

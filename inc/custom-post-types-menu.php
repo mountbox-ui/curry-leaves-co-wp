@@ -99,10 +99,14 @@ function curry_leaves_co_menu_meta_box_callback($post)
     $price = get_post_meta($post->ID, '_menu_item_price', true);
     $discount = get_post_meta($post->ID, '_menu_item_discount_percentage', true);
     $offer_amount = get_post_meta($post->ID, '_menu_item_offer_amount', true);
+    $ingredients = get_post_meta($post->ID, '_menu_item_ingredients', true);
     $calculated_final_price = '';
-    if ($price && $discount && $offer_amount !== '') {
+    $calculated_offer_amount = '';
+    if ($price && $discount !== '') {
         $numeric_price = floatval(preg_replace('/[^0-9\.]/', '', $price));
-        $calculated_final_price = number_format_i18n(max(0, $numeric_price - floatval($offer_amount)), 2);
+        $discount_percentage = floatval($discount);
+        $calculated_offer_amount = number_format_i18n(max(0, $numeric_price * $discount_percentage / 100), 2);
+        $calculated_final_price = number_format_i18n(max(0, $numeric_price - floatval(preg_replace('/[^0-9\.]/', '', $calculated_offer_amount))), 2);
     }
     ?>
     <p>
@@ -119,14 +123,21 @@ function curry_leaves_co_menu_meta_box_callback($post)
     </p>
     <p>
         <label
-            for="menu_item_final_price"><strong><?php _e('Final Price', 'curry-leaves-co'); ?></strong></label><br>
-        <input type="text" id="menu_item_final_price" name="menu_item_final_price" value="<?php echo esc_attr($calculated_final_price); ?>"
+            for="menu_item_offer_amount"><strong><?php _e('Offer Amount (You Save)', 'curry-leaves-co'); ?></strong></label><br>
+        <input type="text" id="menu_item_offer_amount" value="<?php echo esc_attr($offer_amount !== '' ? number_format_i18n(floatval($offer_amount), 2) : $calculated_offer_amount); ?>"
+            size="25" readonly style="background:#f7f7f7;border:1px solid #ddd;" />
+    </p>
+    <p>
+        <label
+            for="menu_item_final_price"><strong><?php _e('Offer Price', 'curry-leaves-co'); ?></strong></label><br>
+        <input type="text" id="menu_item_final_price" value="<?php echo esc_attr($calculated_final_price); ?>"
             size="25" readonly style="background:#f7f7f7;border:1px solid #ddd;" />
     </p>
     <script>
         (function() {
             var priceEl = document.getElementById('menu_item_price');
             var discountEl = document.getElementById('menu_item_discount');
+            var offerEl = document.getElementById('menu_item_offer_amount');
             var finalEl = document.getElementById('menu_item_final_price');
 
             function formatValue(amount) {
@@ -136,10 +147,13 @@ function curry_leaves_co_menu_meta_box_callback($post)
             function calculateFinalPrice() {
                 var price = parseFloat(priceEl.value.replace(/[^0-9\.]/g, '')) || 0;
                 var discount = parseFloat(discountEl.value) || 0;
+                var offerAmount = '';
                 var finalPrice = '';
                 if (price > 0) {
-                    finalPrice = price - (price * discount / 100);
+                    offerAmount = price * discount / 100;
+                    finalPrice = price - offerAmount;
                 }
+                offerEl.value = formatValue(offerAmount);
                 finalEl.value = formatValue(finalPrice);
             }
 

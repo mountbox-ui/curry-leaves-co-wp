@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * Chef special / dish of the month.
  *
@@ -11,20 +11,33 @@ $dish_of_month    = $dish_of_month_id ? get_post( $dish_of_month_id ) : null;
 
 if ( $dish_of_month && 'menu_item' === $dish_of_month->post_type && 'publish' === $dish_of_month->post_status ) {
     $img = get_the_post_thumbnail_url( $dish_of_month, 'large' );
-    $img = $img ? $img : clc_image_url( 'clc_special_image', $images[3] );
+    $img = $img ? $img : get_template_directory_uri() . '/assets/images/fallback_img.png';
     $special_title = wp_kses_post( get_the_title( $dish_of_month ) );
     $special_story = wp_strip_all_tags( apply_filters( 'the_content', $dish_of_month->post_content ) );
     $special_price = get_post_meta( $dish_of_month_id, '_menu_item_price', true );
-    $special_ingredients = get_post_meta( $dish_of_month_id, '_menu_item_ingredients', true );
-    $special_ingredients = array_filter( array_map( 'trim', explode( ',', $special_ingredients ) ) );
-    if ( empty( $special_ingredients ) ) {
-        $special_ingredients = array( 'Chefâ€™s choice', 'Seasonal produce', 'Premium spices', 'Handcrafted preparation' );
+    $special_discount = get_post_meta( $dish_of_month_id, '_menu_item_discount_percentage', true );
+    $special_offer_amount = get_post_meta( $dish_of_month_id, '_menu_item_offer_amount', true );
+    $special_has_discount = false;
+    $special_final_price = $special_price;
+    if ( $special_price && $special_discount && $special_offer_amount !== '' ) {
+        $special_has_discount = true;
+        $numeric = floatval( preg_replace( '/[^0-9\.]/', '', $special_price ) );
+        $special_final_price = number_format_i18n( max( 0, $numeric - floatval( $special_offer_amount ) ), 2 );
     }
+    $special_ingredients = get_post_meta( $dish_of_month_id, '_menu_item_ingredients', true );
+    if ( strpos( $special_ingredients, 'Warning:' ) !== false || strpos( $special_ingredients, 'WARNING:' ) !== false ) {
+        $special_ingredients = '';
+    }
+    $special_ingredients = array_filter( array_map( 'trim', explode( ',', $special_ingredients ) ) );
 } else {
     $img = clc_image_url( 'clc_special_image', $images[3] );
     $special_title = wp_kses_post( clc_mod( 'clc_special_heading', 'Truffle-Infused <em>Beef Wellington</em>' ) );
     $special_story = clc_mod( 'clc_special_story', 'Our executive chef layers buttery pastry with premium grass-fed beef, black truffle, and a red wine reduction â€” composed for takeaway and finished moments before you collect.' );
     $special_price = clc_mod( 'clc_special_price', '58' );
+    $special_has_discount = false;
+    $special_final_price = $special_price;
+    $special_discount = '';
+    $special_offer_amount = '';
     $special_ingredients = array( 'Grass-fed beef', 'Black truffle', 'Puff pastry', 'Red wine jus' );
 }
 ?>
@@ -47,17 +60,25 @@ if ( $dish_of_month && 'menu_item' === $dish_of_month->post_type && 'publish' ==
 					<span class="chef-title"><?php echo esc_html( clc_mod( 'clc_chef_title', 'Executive Chef' ) ); ?></span>
 				</div>
 				<p class="chef-story"><?php echo esc_html( $special_story ); ?></p>
-				<div class="special-ingredients-list">
-					<?php
-					foreach ( $special_ingredients as $ing ) :
-											?>
-						<span class="ingredient-tag"><?php echo esc_html( $ing ); ?></span>
-					<?php endforeach; ?>
-				</div>
+				<?php if ( ! empty( $special_ingredients ) ) : ?>
+					<div class="special-ingredients-list">
+						<?php foreach ( $special_ingredients as $ing ) : ?>
+							<span class="ingredient-tag"><?php echo esc_html( $ing ); ?></span>
+						<?php endforeach; ?>
+					</div>
+				<?php endif; ?>
 				<div class="special-price-row">
 					<?php if ( $special_price ) : ?>
+						<?php if ( $special_has_discount ) : ?>
+							<div style="display: flex; flex-direction: column; align-items: flex-start; gap: 0.15rem;">
+								<span style="font-size: 0.85rem; text-decoration: line-through; color: #9ca3af;">$<?php echo esc_html( $special_price ); ?></span>
+								<span class="special-price">$<?php echo esc_html( $special_final_price ); ?></span>
+								<span style="font-size: 0.8rem; font-weight: 600; color: #10b981;"><?php echo esc_html( $special_discount ); ?>% off</span>
+							</div>
+						<?php else : ?>
 							<span class="special-price">$<?php echo esc_html( $special_price ); ?></span>
 						<?php endif; ?>
+					<?php endif; ?>
 					<a href="#order" class="btn-luxury btn-gold"><?php esc_html_e( 'Order Your Dish', 'curry-leaves-co' ); ?></a>
 				</div>
 			</div>

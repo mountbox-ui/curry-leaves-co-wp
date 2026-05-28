@@ -30,17 +30,17 @@
 
 		<nav role="navigation" aria-label="<? esc_attr_e( 'Primary', 'curry-leaves-co' ); ?>">
 			<ul class="nav-links">
-				<li><a href="#home"><?php esc_html_e( 'Home', 'curry-leaves-co' ); ?></a></li>
-				<li><a href="#about"><?php esc_html_e( 'About', 'curry-leaves-co' ); ?></a></li>
-				<li><a href="#menu"><?php esc_html_e( 'Menu', 'curry-leaves-co' ); ?></a></li>
-				<li><a href="#specials"><?php esc_html_e( 'Specials', 'curry-leaves-co' ); ?></a></li>
-				<li><a href="#gallery"><?php esc_html_e( 'Gallery', 'curry-leaves-co' ); ?></a></li>
-				<li><a href="#testimonials"><?php esc_html_e( 'Testimonials', 'curry-leaves-co' ); ?></a></li>
-				<li><a href="#contact"><?php esc_html_e( 'Contact', 'curry-leaves-co' ); ?></a></li>
+				<li><a href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php esc_html_e( 'Home', 'curry-leaves-co' ); ?></a></li>
+				<li><a href="<?php echo esc_url( home_url( '/#about' ) ); ?>"><?php esc_html_e( 'About', 'curry-leaves-co' ); ?></a></li>
+				<li><a href="<?php echo esc_url( home_url( '/menu-listing' ) ); ?>"><?php esc_html_e( 'Menu', 'curry-leaves-co' ); ?></a></li>
+				<li><a href="<?php echo esc_url( home_url( '/#specials' ) ); ?>"><?php esc_html_e( 'Specials', 'curry-leaves-co' ); ?></a></li>
+				<li><a href="<?php echo esc_url( home_url( '/#gallery' ) ); ?>"><?php esc_html_e( 'Gallery', 'curry-leaves-co' ); ?></a></li>
+				<li><a href="<?php echo esc_url( home_url( '/#testimonials' ) ); ?>"><?php esc_html_e( 'Testimonials', 'curry-leaves-co' ); ?></a></li>
+				<li><a href="<?php echo esc_url( home_url( '/#contact' ) ); ?>"><?php esc_html_e( 'Contact', 'curry-leaves-co' ); ?></a></li>
 			</ul>
 		</nav>
 
-		<a href="<?php echo esc_url( clc_phone_href() ); ?>" class="nav-reserve-btn"><?php esc_html_e( 'Order Pickup', 'curry-leaves-co' ); ?></a>
+		<a href="<?php echo esc_url( clc_phone_href() ); ?>" class="nav-reserve-btn"><?php esc_html_e( 'Call to Order', 'curry-leaves-co' ); ?></a>
 
 		<button type="button" class="hamburger" id="hamburger" aria-label="<? esc_attr_e( 'Toggle menu', 'curry-leaves-co' ); ?>" aria-expanded="false">
 			<span></span><span></span><span></span>
@@ -59,8 +59,8 @@
 	<a href="<?php echo esc_url( clc_phone_href() ); ?>" class="nav-reserve-btn"><?php esc_html_e( 'Order Pickup', 'curry-leaves-co' ); ?></a>
 </nav>
 
-<a href="#order" class="floating-reserve" aria-label="<? esc_attr_e( 'Order for pickup', 'curry-leaves-co' ); ?>">
+<a href="<?php echo esc_url( clc_phone_href() ); ?>" class="floating-reserve" aria-label="<?php esc_attr_e( 'Call to order', 'curry-leaves-co' ); ?>">
 	<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24" height="24" aria-hidden="true">
-		<path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10z"/>
+		<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.86 19.86 0 0 1-8.63-3.07 19.42 19.42 0 0 1-6-6A19.86 19.86 0 0 1 2.11 4.11 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.86.32 1.7.59 2.5a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.58-1.16a2 2 0 0 1 2.11-.45c.8.27 1.64.47 2.5.59A2 2 0 0 1 22 16.92z"/>
 	</svg>
 </a>

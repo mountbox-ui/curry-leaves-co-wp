@@ -43,7 +43,14 @@ if ( ! empty( $featured ) ) {
 									<?php endforeach; ?>
 								</div>
 							<?php endif; ?>
-							<span class="carousel-card-price">$<?php echo esc_html( $item['price'] ); ?></span>
+							<?php if ( ! empty( $item['has_discount'] ) ) : ?>
+								<div class="carousel-card-price-wrap" style="display: flex; flex-direction: column; align-items: flex-start;">
+									<span class="carousel-card-price-original" style="font-size: 0.75rem; text-decoration: line-through; color: #9ca3af; line-height: 1;">$<?php echo esc_html( $item['original_price'] ); ?></span>
+									<span class="carousel-card-price" style="margin-top: 0; line-height: 1;">$<?php echo esc_html( $item['price'] ); ?></span>
+								</div>
+							<?php else: ?>
+								<span class="carousel-card-price">$<?php echo esc_html( $item['price'] ); ?></span>
+							<?php endif; ?>
 						</div>
 					</article>
 				<?php endforeach; ?>

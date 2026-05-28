@@ -5,24 +5,22 @@
  * @package Curry_Leaves_Co
  */
 
-get_header( 'luxury' );
+get_header('luxury');
 
 $sections = array(
 	'hero',
 	'experience',
 	'dishes',
 	'top-dishes',
-	'veg-dishes',
-	'nonveg-dishes',
 	'specials',
+	'veg-dishes',
 	'testimonials',
 	'gallery',
 	'order',
-	'contact',
 );
 
-foreach ( $sections as $section ) {
-	get_template_part( 'template-parts/home/' . $section );
+foreach ($sections as $section) {
+	get_template_part('template-parts/home/' . $section);
 }
 
-get_footer( 'luxury' );
+get_footer('luxury');

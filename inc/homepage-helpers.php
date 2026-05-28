@@ -130,7 +130,7 @@ function clc_get_hero_slides() {
 			'cta1'     => 'Order Your Dish',
 			'cta1_url' => '#order',
 			'cta2'     => 'View Menu',
-			'cta2_url' => '#menu',
+			'cta2_url' => '/menu-listing',
 		),
 		array(
 			'title'    => 'Where <em>Luxury</em> Meets Flavor',
@@ -138,8 +138,8 @@ function clc_get_hero_slides() {
 			'desc'     => 'Warm textures, golden accents, and unforgettable taste — ready when you arrive.',
 			'cta1'     => 'Order Your Dish',
 			'cta1_url' => '#order',
-			'cta2'     => 'Our Specials',
-			'cta2_url' => '#specials',
+			'cta2'     => 'View Menu',
+			'cta2_url' => '/menu-listing',
 		),
 		array(
 			'title'    => 'Cinematic <em>Food</em> Artistry',
@@ -147,8 +147,8 @@ function clc_get_hero_slides() {
 			'desc'     => 'Every plate composed like fine dining — packaged for your premium pickup experience.',
 			'cta1'     => 'Order Your Dish',
 			'cta1_url' => '#order',
-			'cta2'     => 'Gallery',
-			'cta2_url' => '#gallery',
+			'cta2'     => 'View Menu',
+			'cta2_url' => '/menu-listing',
 		),
 	);
 
@@ -261,13 +261,28 @@ function clc_get_dishes( $limit = 12 ) {
 			$store_name = implode( ', ', wp_list_pluck( $store_terms, 'name' ) );
 		}
 		$thumb = get_the_post_thumbnail_url( $id, 'large' );
+		$price = get_post_meta( $id, '_menu_item_price', true ) ?: '24';
+		$discount = get_post_meta( $id, '_menu_item_discount_percentage', true );
+		$offer_amount = get_post_meta( $id, '_menu_item_offer_amount', true );
+		$has_discount = false;
+		$final_price = $price;
+		if ( $price && $discount && $offer_amount !== '' ) {
+			$has_discount = true;
+			$numeric_price = floatval(preg_replace('/[^0-9\.]/', '', $price));
+			$final_price = number_format_i18n(max(0, $numeric_price - floatval($offer_amount)), 2);
+		}
+
 		$dishes[] = array(
 			'name'    => get_the_title(),
 			'desc'    => has_excerpt() ? get_the_excerpt() : wp_trim_words( get_the_content(), 18 ),
-			'price'   => get_post_meta( $id, '_menu_item_price', true ) ?: '24',
+			'price'   => $final_price,
+			'original_price' => $price,
+			'has_discount' => $has_discount,
+			'discount' => $discount,
+			'offer_amount' => $offer_amount,
 			'cat'     => $cat,
 			'store'   => $store_name,
-			'image'   => $thumb ?: $images[ $i % count( $images ) ],
+			'image'   => $thumb ?: get_template_directory_uri() . '/assets/images/fallback_img.png',
 			'rating'  => get_post_meta( $id, '_menu_item_rating', true ) ?: '4.8',
 			'link'    => get_permalink(),
 		);
@@ -355,13 +370,28 @@ function clc_get_store_dishes( $store_key, $limit = 12 ) {
 			$store_name = implode( ', ', wp_list_pluck( $store_terms, 'name' ) );
 		}
 		$thumb = get_the_post_thumbnail_url( $id, 'large' );
+		$price = get_post_meta( $id, '_menu_item_price', true ) ?: '24';
+		$discount = get_post_meta( $id, '_menu_item_discount_percentage', true );
+		$offer_amount = get_post_meta( $id, '_menu_item_offer_amount', true );
+		$has_discount = false;
+		$final_price = $price;
+		if ( $price && $discount && $offer_amount !== '' ) {
+			$has_discount = true;
+			$numeric_price = floatval(preg_replace('/[^0-9\.]/', '', $price));
+			$final_price = number_format_i18n(max(0, $numeric_price - floatval($offer_amount)), 2);
+		}
+
 		$dishes[] = array(
 			'name'    => get_the_title(),
 			'desc'    => has_excerpt() ? get_the_excerpt() : wp_trim_words( get_the_content(), 18 ),
-			'price'   => get_post_meta( $id, '_menu_item_price', true ) ?: '24',
+			'price'   => $final_price,
+			'original_price' => $price,
+			'has_discount' => $has_discount,
+			'discount' => $discount,
+			'offer_amount' => $offer_amount,
 			'cat'     => $cat,
 			'store'   => $store_name,
-			'image'   => $thumb ?: $images[ $i % count( $images ) ],
+			'image'   => $thumb ?: get_template_directory_uri() . '/assets/images/fallback_img.png',
 			'rating'  => get_post_meta( $id, '_menu_item_rating', true ) ?: '4.8',
 			'link'    => get_permalink(),
 		);

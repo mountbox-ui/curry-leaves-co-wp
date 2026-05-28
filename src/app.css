@@ -194,6 +194,11 @@ body.admin-bar .luxury-nav {
     top: 46px;
   }
 }
+@media screen and (max-width: 640px) {
+  body.admin-bar .luxury-nav {
+    top: 0px;
+  }
+}
 
 .luxury-nav {
   @apply fixed top-0 left-0 right-0 z-50;
@@ -873,6 +878,32 @@ body.admin-bar .luxury-nav {
   background: var(--glass-bg-light);
 }
 
+.stat-icon {
+  @apply flex items-center justify-center;
+  margin-bottom: 0.85rem;
+  color: var(--color-gold);
+}
+
+.stat-icon svg {
+  width: 44px;
+  height: 44px;
+}
+
+.stat-title {
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--color-cream);
+}
+
+.stat-desc {
+  margin-top: 0.5rem;
+  font-size: 0.85rem;
+  color: var(--color-cream-muted);
+  line-height: 1.5;
+}
+
 .stat-number {
   display: block;
   font-family: var(--font-serif);
@@ -898,7 +929,7 @@ body.admin-bar .luxury-nav {
 }
 
 .filter-tabs {
-  @apply flex flex-wrap justify-center gap-3 mb-10;
+  @apply flex flex-wrap justify-start gap-3 mb-10;
 }
 
 .filter-tab {
@@ -924,6 +955,31 @@ body.admin-bar .luxury-nav {
 .dishes-grid {
   @apply grid gap-6;
   grid-template-columns: repeat(3, 1fr);
+}
+
+.dishes-grid.dishes-scroll {
+  display: flex;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  gap: 1.5rem;
+  padding-bottom: 1rem;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.dishes-grid.dishes-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.dishes-grid.dishes-scroll .dish-card {
+  min-width: 320px;
+  flex: 0 0 auto;
+}
+
+@media (max-width: 768px) {
+  .dishes-grid.dishes-scroll .dish-card {
+    min-width: 280px;
+  }
 }
 
 .dish-card {
@@ -999,6 +1055,18 @@ body.admin-bar .luxury-nav {
   border-top: 1px solid rgba(250, 243, 224, 0.08);
 }
 
+.dish-card-price-wrap {
+  @apply flex flex-col items-start;
+  gap: 0.25rem;
+  line-height: 1;
+}
+
+.dish-card-price-old {
+  font-size: 0.8rem;
+  color: rgba(250, 243, 224, 0.45);
+  text-decoration: line-through;
+}
+
 .dish-card-price {
   font-family: var(--font-serif);
   font-size: 1.25rem;
@@ -1053,7 +1121,8 @@ body.admin-bar .luxury-nav {
   @apply flex gap-6 overflow-x-auto scroll-smooth;
   scrollbar-width: none;
   -ms-overflow-style: none;
-  padding-bottom: 0.5rem;
+  padding: 2rem 2rem 5rem 2rem;
+  margin: -2rem -2rem -4rem -2rem;
 }
 
 .carousel-track::-webkit-scrollbar {
@@ -1749,7 +1818,7 @@ body.admin-bar .luxury-nav {
 }
 
 .contact-info-list {
-  @apply flex flex-col gap-4 mb-8;
+  @apply flex flex-col gap-4;
 }
 
 .contact-info-item {
@@ -1835,7 +1904,7 @@ body.admin-bar .luxury-nav {
 }
 
 .footer-main {
-  @apply grid gap-10 mb-12;
+  @apply grid gap-10 ;
   grid-template-columns: 1.5fr repeat(3, 1fr);
 }
 
@@ -1874,7 +1943,6 @@ body.admin-bar .luxury-nav {
 .footer-newsletter p {
   font-size: 0.85rem;
   color: var(--color-cream-muted);
-  margin-bottom: 1rem;
   line-height: 1.6;
 }
 
@@ -1913,13 +1981,42 @@ body.admin-bar .luxury-nav {
 }
 
 .footer-bottom {
-  @apply flex items-center justify-between pt-8;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 1rem;
+  padding-top: 2rem;
   border-top: 1px solid rgba(250, 243, 224, 0.08);
 }
 
 .footer-bottom p {
   font-size: 0.8rem;
   color: var(--color-cream-muted);
+}
+
+.footer-bottom > p:first-child {
+  justify-self: start;
+}
+
+.footer-powered-by {
+  @apply block;
+  justify-self: end;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.footer-powered-by span {
+  color: var(--color-gold);
+  font-weight: 600;
+}
+
+.powered-by {
+  font-size: 0.8rem;
+  color: var(--color-cream-muted);
+  text-align: center;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(250, 243, 224, 0.08);
 }
 
 .back-to-top {
@@ -2147,9 +2244,23 @@ body.luxury-home button:focus-visible {
   }
 
   .footer-bottom {
-    flex-direction: column;
-    gap: 1rem;
+    grid-template-columns: 1fr;
+    justify-items: center;
+    gap: 0.85rem;
     text-align: center;
+  }
+
+  .footer-bottom > p:first-child {
+    justify-self: center;
+  }
+
+  .footer-powered-by {
+    justify-self: center;
+    text-align: center;
+  }
+
+  .footer-bottom .back-to-top {
+    justify-self: center;
   }
 
   .mouse-glow {

@@ -44,7 +44,7 @@ function curry_leaves_co_scripts() {
     // Enqueue the Tailwind generated CSS
     wp_enqueue_style( 'curry-leaves-co-tailwind', get_template_directory_uri() . '/assets/css/app.css', array(), filemtime( get_template_directory() . '/assets/css/app.css' ) );
 
-    if ( is_front_page() ) {
+    if ( is_front_page() || is_page_template( 'templates/template-menu.php' ) ) {
         wp_enqueue_script(
             'curry-leaves-co-homepage',
             get_template_directory_uri() . '/assets/js/homepage.js',
