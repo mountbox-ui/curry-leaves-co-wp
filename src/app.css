@@ -2305,3 +2305,9 @@ body.luxury-home button:focus-visible {
     display: none !important;
   }
 }
+
+.highlight-modal-text
+{
+  color: #f4580a !important;
+  font-weight: 600 !important;
+}

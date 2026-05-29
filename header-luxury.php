@@ -55,14 +55,14 @@
 			<line x1="6" y1="6" x2="18" y2="18"></line>
 		</svg>
 	</button>
-	<a href="#home"><?php esc_html_e( 'Home', 'curry-leaves-co' ); ?></a>
-	<a href="#about"><?php esc_html_e( 'About', 'curry-leaves-co' ); ?></a>
-	<a href="#menu"><?php esc_html_e( 'Menu', 'curry-leaves-co' ); ?></a>
-	<a href="#specials"><?php esc_html_e( 'Specials', 'curry-leaves-co' ); ?></a>
-	<a href="#gallery"><?php esc_html_e( 'Gallery', 'curry-leaves-co' ); ?></a>
-	<a href="#testimonials"><?php esc_html_e( 'Testimonials', 'curry-leaves-co' ); ?></a>
-	<a href="#contact"><?php esc_html_e( 'Contact', 'curry-leaves-co' ); ?></a>
-	<a href="<?php echo esc_url( clc_phone_href() ); ?>" class="nav-reserve-btn"><?php esc_html_e( 'Order Pickup', 'curry-leaves-co' ); ?></a>
+	<a href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php esc_html_e( 'Home', 'curry-leaves-co' ); ?></a>
+	<a href="<?php echo esc_url( home_url( '/#about' ) ); ?>"><?php esc_html_e( 'About', 'curry-leaves-co' ); ?></a>
+	<a href="<?php echo esc_url( home_url( '/menu-listing' ) ); ?>"><?php esc_html_e( 'Menu', 'curry-leaves-co' ); ?></a>
+	<a href="<?php echo esc_url( home_url( '/#specials' ) ); ?>"><?php esc_html_e( 'Specials', 'curry-leaves-co' ); ?></a>
+	<a href="<?php echo esc_url( home_url( '/#gallery' ) ); ?>"><?php esc_html_e( 'Gallery', 'curry-leaves-co' ); ?></a>
+	<a href="<?php echo esc_url( home_url( '/#testimonials' ) ); ?>"><?php esc_html_e( 'Testimonials', 'curry-leaves-co' ); ?></a>
+	<a href="<?php echo esc_url( home_url( '/#contact' ) ); ?>"><?php esc_html_e( 'Contact', 'curry-leaves-co' ); ?></a>
+	<a href="<?php echo esc_url( clc_phone_href() ); ?>" class="nav-reserve-btn"><?php esc_html_e( 'Call to Order', 'curry-leaves-co' ); ?></a>
 </nav>
 
 <a href="<?php echo esc_url( clc_phone_href() ); ?>" class="floating-reserve" aria-label="<?php esc_attr_e( 'Call to order', 'curry-leaves-co' ); ?>">
