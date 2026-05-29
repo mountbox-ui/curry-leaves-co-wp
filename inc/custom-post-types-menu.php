@@ -341,50 +341,189 @@ function curry_leaves_co_menu_item_admin_script() {
 
     $nonce = wp_create_nonce( 'clc_dish_of_month_nonce' );
     ?>
+    <style>
+        .clc-dom-modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,.55);
+            z-index: 100000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+        }
+        .clc-dom-modal-overlay.is-open { display: flex; }
+        .clc-dom-modal {
+            width: 100%;
+            max-width: 520px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 20px 60px rgba(0,0,0,.3);
+            overflow: hidden;
+        }
+        .clc-dom-modal__header {
+            padding: 16px 18px;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+        .clc-dom-modal__title {
+            font-size: 14px;
+            font-weight: 700;
+            margin: 0;
+        }
+        .clc-dom-modal__body {
+            padding: 16px 18px;
+            color: #374151;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+        .clc-dom-modal__footer {
+            padding: 14px 18px;
+            border-top: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+        .clc-dom-modal__close {
+            border: none;
+            background: transparent;
+            font-size: 18px;
+            line-height: 1;
+            cursor: pointer;
+            color: #6b7280;
+        }
+    </style>
+
+    <div class="clc-dom-modal-overlay" id="clc-dom-modal" role="dialog" aria-modal="true" aria-labelledby="clc-dom-modal-title">
+        <div class="clc-dom-modal">
+            <div class="clc-dom-modal__header">
+                <p class="clc-dom-modal__title" id="clc-dom-modal-title"><?php echo esc_html__( 'Save Dish of the Month?', 'curry-leaves-co' ); ?></p>
+                <button type="button" class="clc-dom-modal__close" data-clc-dom-close aria-label="<?php echo esc_attr__( 'Close', 'curry-leaves-co' ); ?>">×</button>
+            </div>
+            <div class="clc-dom-modal__body">
+                <p style="margin:0 0 10px 0;"><?php echo esc_html__( 'You selected:', 'curry-leaves-co' ); ?> <strong id="clc-dom-selected-name"></strong></p>
+                <p style="margin:0;"><?php echo esc_html__( 'Click Save to update Dish of the Month.', 'curry-leaves-co' ); ?></p>
+            </div>
+            <div class="clc-dom-modal__footer">
+                <button type="button" class="button" data-clc-dom-cancel><?php echo esc_html__( 'Cancel', 'curry-leaves-co' ); ?></button>
+                <button type="button" class="button button-primary" data-clc-dom-save><?php echo esc_html__( 'Save', 'curry-leaves-co' ); ?></button>
+            </div>
+        </div>
+    </div>
+
     <script>
     (function(){
         document.addEventListener('DOMContentLoaded', function() {
+            var overlay = document.getElementById('clc-dom-modal');
+            if (!overlay) return;
+            var nameEl = document.getElementById('clc-dom-selected-name');
+            var btnSave = overlay.querySelector('[data-clc-dom-save]');
+            var btnCancel = overlay.querySelector('[data-clc-dom-cancel]');
+            var btnClose = overlay.querySelector('[data-clc-dom-close]');
+
+            var pendingDishId = null;
+            var previousDishId = null;
+
+            function openModal(dishId, dishName) {
+                pendingDishId = dishId;
+                if (nameEl) nameEl.textContent = dishName || '';
+                overlay.classList.add('is-open');
+                overlay.setAttribute('aria-hidden', 'false');
+                btnSave && btnSave.focus();
+            }
+
+            function closeModal() {
+                overlay.classList.remove('is-open');
+                overlay.setAttribute('aria-hidden', 'true');
+            }
+
+            function revertSelection() {
+                document.querySelectorAll('input[name="clc_dish_of_month"]').forEach(function(radio) {
+                    radio.checked = (previousDishId && radio.value === previousDishId);
+                });
+            }
+
+            function saveSelection(dishId) {
+                var data = new FormData();
+                data.append('action', 'clc_set_dish_of_month');
+                data.append('dish_id', dishId);
+                data.append('_ajax_nonce', '<?php echo esc_js( $nonce ); ?>');
+
+                fetch(ajaxurl, {
+                    method: 'POST',
+                    body: data,
+                    credentials: 'same-origin'
+                })
+                .then(function(response) { return response.json(); })
+                .then(function(result) {
+                    if (!result.success) {
+                        alert((result.data && result.data.message) ? result.data.message : '<?php echo esc_js( __( 'Unable to save Dish of the Month.', 'curry-leaves-co' ) ); ?>');
+                        revertSelection();
+                        return;
+                    }
+
+                    document.querySelectorAll('input[name="clc_dish_of_month"]').forEach(function(other) {
+                        if (other.value !== dishId) other.checked = false;
+                    });
+
+                    previousDishId = dishId;
+
+                    var message = (result.data && result.data.message) ? result.data.message : '<?php echo esc_js( __( 'Dish of the Month updated.', 'curry-leaves-co' ) ); ?>';
+                    var notice = document.querySelector('.clc-dish-of-month-notice');
+                    if (!notice) {
+                        notice = document.createElement('div');
+                        notice.className = 'notice notice-success is-dismissible clc-dish-of-month-notice';
+                        notice.style.marginTop = '1rem';
+                        var wrap = document.querySelector('.wrap');
+                        if (wrap) wrap.insertBefore(notice, wrap.firstChild);
+                    }
+                    notice.textContent = message;
+                })
+                .catch(function(){
+                    alert('<?php echo esc_js( __( 'Unable to save Dish of the Month.', 'curry-leaves-co' ) ); ?>');
+                    revertSelection();
+                });
+            }
+
+            btnCancel && btnCancel.addEventListener('click', function() {
+                closeModal();
+                revertSelection();
+            });
+            btnClose && btnClose.addEventListener('click', function() {
+                closeModal();
+                revertSelection();
+            });
+            overlay.addEventListener('click', function(e) {
+                if (e.target === overlay) {
+                    closeModal();
+                    revertSelection();
+                }
+            });
+            document.addEventListener('keydown', function(e){
+                if (e.key === 'Escape' && overlay.classList.contains('is-open')) {
+                    closeModal();
+                    revertSelection();
+                }
+            });
+            btnSave && btnSave.addEventListener('click', function() {
+                closeModal();
+                if (pendingDishId) saveSelection(pendingDishId);
+            });
+
+            // Track current selection as "previous"
+            var initial = document.querySelector('input[name="clc_dish_of_month"]:checked');
+            previousDishId = initial ? initial.value : null;
+
             document.querySelectorAll('input[name="clc_dish_of_month"]').forEach(function(radio) {
                 radio.addEventListener('change', function() {
                     var dishId = this.value;
-                    var data = new FormData();
-                    data.append('action', 'clc_set_dish_of_month');
-                    data.append('dish_id', dishId);
-                    data.append('_ajax_nonce', '<?php echo esc_js( $nonce ); ?>');
-
-                    fetch(ajaxurl, {
-                        method: 'POST',
-                        body: data,
-                        credentials: 'same-origin'
-                    })
-                    .then(function(response) {
-                        return response.json();
-                    })
-                    .then(function(result) {
-                        if (!result.success) {
-                            alert(result.data?.message || '<?php echo esc_js( __( 'Unable to save Dish of the Month.', 'curry-leaves-co' ) ); ?>');
-                            return;
-                        }
-
-                        document.querySelectorAll('input[name="clc_dish_of_month"]').forEach(function(other) {
-                            if (other.value !== dishId) {
-                                other.checked = false;
-                            }
-                        });
-
-                        var message = result.data?.message || '<?php echo esc_js( __( 'Dish of the Month updated.', 'curry-leaves-co' ) ); ?>';
-                        var notice = document.querySelector('.clc-dish-of-month-notice');
-                        if (!notice) {
-                            notice = document.createElement('div');
-                            notice.className = 'notice notice-success is-dismissible clc-dish-of-month-notice';
-                            notice.style.marginTop = '1rem';
-                            var wrap = document.querySelector('.wrap');
-                            if (wrap) {
-                                wrap.insertBefore(notice, wrap.firstChild);
-                            }
-                        }
-                        notice.textContent = message;
-                    });
+                    var row = this.closest('tr');
+                    var title = row ? row.querySelector('.row-title') : null;
+                    var dishName = title ? title.textContent.trim() : '';
+                    openModal(dishId, dishName);
                 });
             });
         });

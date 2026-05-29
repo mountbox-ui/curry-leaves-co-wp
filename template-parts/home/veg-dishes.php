@@ -85,7 +85,7 @@ if ( ! $veg_term ) {
 												<span class="carousel-card-price" style="margin-top: 0; line-height: 1;">$<?php echo esc_html( $final_price ); ?></span>
 											</div>
 										<?php endif; ?>
-										<a href="#order" class="dish-card-btn" style="padding: 0.5rem 1rem; font-size: 0.875rem;"><?php esc_html_e( 'Order', 'curry-leaves-co' ); ?></a>
+										<!-- <a href="#order" class="dish-card-btn" style="padding: 0.5rem 1rem; font-size: 0.875rem;"><?php esc_html_e( 'Order', 'curry-leaves-co' ); ?></a> -->
 									</div>
 								</div>
 							</article>

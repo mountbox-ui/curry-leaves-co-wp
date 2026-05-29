@@ -13,7 +13,10 @@ if ( $dish_of_month && 'menu_item' === $dish_of_month->post_type && 'publish' ==
     $img = get_the_post_thumbnail_url( $dish_of_month, 'large' );
     $img = $img ? $img : get_template_directory_uri() . '/assets/images/fallback_img.png';
     $special_title = wp_kses_post( get_the_title( $dish_of_month ) );
-    $special_story = wp_strip_all_tags( apply_filters( 'the_content', $dish_of_month->post_content ) );
+    $special_story = $dish_of_month->post_excerpt;
+    if ( ! $special_story ) {
+        $special_story = wp_trim_words( wp_strip_all_tags( $dish_of_month->post_content ), 24 );
+    }
     $special_price = get_post_meta( $dish_of_month_id, '_menu_item_price', true );
     $special_discount = get_post_meta( $dish_of_month_id, '_menu_item_discount_percentage', true );
     $special_offer_amount = get_post_meta( $dish_of_month_id, '_menu_item_offer_amount', true );

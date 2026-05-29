@@ -66,18 +66,23 @@
     const btn = document.getElementById('hamburger');
     const menu = document.getElementById('mobile-menu');
     if (!btn || !menu) return;
+    const closeBtn = menu.querySelector('.mobile-menu-close');
     const toggle = () => {
       const open = btn.classList.toggle('active');
       menu.classList.toggle('open', open);
       btn.setAttribute('aria-expanded', open ? 'true' : 'false');
       document.body.style.overflow = open ? 'hidden' : '';
     };
-    btn.addEventListener('click', toggle);
-    menu.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => {
+    const close = () => {
       btn.classList.remove('active');
       menu.classList.remove('open');
       btn.setAttribute('aria-expanded', 'false');
       document.body.style.overflow = '';
+    };
+    btn.addEventListener('click', toggle);
+    closeBtn && closeBtn.addEventListener('click', close);
+    menu.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => {
+      close();
     }));
   }
 

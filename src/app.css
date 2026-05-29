@@ -400,6 +400,25 @@ body.admin-bar .luxury-nav {
   margin-top: 1rem;
 }
 
+.mobile-menu-close {
+  @apply absolute flex items-center justify-center;
+  top: 1.25rem;
+  right: 1.25rem;
+  width: 44px;
+  height: 44px;
+  border-radius: 9999px;
+  border: 1px solid var(--glass-border);
+  background: rgba(13, 13, 13, 0.55);
+  color: var(--color-cream);
+  transition: all 0.25s var(--transition-smooth);
+}
+
+.mobile-menu-close:hover {
+  background: var(--color-gold);
+  color: var(--color-charcoal-deep);
+  border-color: var(--color-gold);
+}
+
 .floating-reserve {
   @apply fixed flex items-center justify-center;
   bottom: 2rem;

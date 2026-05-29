@@ -49,6 +49,12 @@
 </header>
 
 <nav class="mobile-menu" id="mobile-menu" aria-label="<? esc_attr_e( 'Mobile navigation', 'curry-leaves-co' ); ?>">
+	<button type="button" class="mobile-menu-close" aria-label="<?php esc_attr_e( 'Close menu', 'curry-leaves-co' ); ?>">
+		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="22" height="22" aria-hidden="true">
+			<line x1="18" y1="6" x2="6" y2="18"></line>
+			<line x1="6" y1="6" x2="18" y2="18"></line>
+		</svg>
+	</button>
 	<a href="#home"><?php esc_html_e( 'Home', 'curry-leaves-co' ); ?></a>
 	<a href="#about"><?php esc_html_e( 'About', 'curry-leaves-co' ); ?></a>
 	<a href="#menu"><?php esc_html_e( 'Menu', 'curry-leaves-co' ); ?></a>
